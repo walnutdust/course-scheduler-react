@@ -2,7 +2,7 @@ import {COURSE_ADD} from '../constants/actionTypes';
 
 const INITIAL_STATE = [];
 
-const applyAddCourse = (state, action) => [...state, action.id];
+const applyAddCourse = (state, action) => [...state, action.course];
 
 function addReducer(state = INITIAL_STATE, action) {
     switch (action.type) {

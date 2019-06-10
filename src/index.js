@@ -5,9 +5,6 @@ import App from './components/App';
 import store from './store';
 import catalog_data from './data/1920';
 import * as serviceWorker from './serviceWorker';
-import {COURSE_ADD} from './constants/actionTypes';
-import {getAddedCourses} from './selectors/course';
-import {doAddCourse} from './actions/add';
 import {Provider} from 'react-redux';
 
 ReactDOM.render(

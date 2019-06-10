@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import './Course.css';
 import {connect} from 'react-redux';
+import {doAddCourse, doBookmarkCourse} from '../actions/course';
+import {getAddedCourses, getBookmarkedCourses} from '../selectors/course';
 
-const Course = ({course}) => {
+const Course = ({course, onBookmark, onAdd}) => {
     const START_F = '20190905';
     const END_F = '20191207';
     const START_W = '20200106';
@@ -114,8 +116,10 @@ const Course = ({course}) => {
 
         return (
             <span>
-                {result.map((prof) => (
-                    <a href={prof.url}>{prof.name}</a>
+                {result.map((prof, index) => (
+                    <a key={index} href={prof.url}>
+                        {prof.name}
+                    </a>
                 ))}
                 &emsp;
             </span>
@@ -292,14 +296,13 @@ const Course = ({course}) => {
     const courseButtons = () => {
         return (
             <div class="course-buttons">
-                <button>Add to Calendar</button>
-                <button>Bookmark</button>
+                <button onClick={() => onAdd(course)}>Add to Calendar</button>
+                <button onClick={() => onBookmark(course)}>Bookmark</button>
             </div>
         );
     };
 
     const toggleBody = (event) => {
-        console.log(event.currentTarget.children[1]);
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
@@ -342,4 +345,17 @@ const Course = ({course}) => {
     );
 };
 
-export default Course;
+const mapStateToProps = (state) => ({
+    bookmarked: getBookmarkedCourses(state),
+    added: getAddedCourses(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onBookmark: (course) => dispatch(doBookmarkCourse(course)),
+    onAdd: (course) => dispatch(doAddCourse(course))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Course);

@@ -6,8 +6,8 @@ import utilReducer from './utils';
 
 const rootReducer = combineReducers({
     courseState: courseReducer,
-    bookmarkState: bookmarkReducer,
-    addState: addReducer,
+    bookmarkedState: bookmarkReducer,
+    addedState: addReducer,
     utilState: utilReducer
 });
 
