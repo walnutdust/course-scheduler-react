@@ -1,0 +1,26 @@
+.course {
+    border-bottom: 2px solid #ccc;
+    margin: 15px 10px 15px 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 10px;
+}
+
+.course button {
+    background-color: white;
+    color: rebeccapurple;
+    border-radius: 5px;
+    border: 2px rebeccapurple solid;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 3px 10px 3px 10px;
+}
+
+.course-title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.course a {
+    color: black;
+}

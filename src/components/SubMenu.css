@@ -1,0 +1,27 @@
+.submenu ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-item img {
+    display: block;
+    margin: auto;
+}
+
+.list-item {
+    text-align: center;
+    margin-bottom: 30px;
+    border-left: 5px solid rebeccapurple;
+}
+
+.submenu {
+    flex: 0.2;
+    top: 0;
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+.unselected {
+    color: #ccc;
+    border-left: 5px solid white;
+}

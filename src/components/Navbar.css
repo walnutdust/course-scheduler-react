@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:700&display=swap');
+
+.navbar {
+    padding: 20px;
+    background-color: rebeccapurple;
+}
+
+.navbar li {
+    font-family: 'Quicksand', cursive;
+    color: white;
+    position: relative;
+    float: left;
+    margin-right: 40px;
+    display: list-item;
+}
+
+.navbar ul {
+    list-style-type: none;
+    line-height: 1;
+}

@@ -1,0 +1,32 @@
+.additional-options {
+    top: 0;
+    position: -webkit-sticky;
+    position: sticky;
+    padding-left: 15px;
+    padding-top: 15px;
+}
+
+.num-found {
+    font-size: 12px;
+}
+
+.additional-options ul {
+    margin-top: 0;
+    padding-left: 0;
+    list-style: none;
+    padding-left: 0;
+}
+
+.additional-options li {
+    font-size: 12px;
+}
+
+.ul-header {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.refine {
+    font-size: 20px;
+    padding-bottom: 10px;
+}
