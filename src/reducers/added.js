@@ -6,9 +6,8 @@ const applyAddCourse = (state, action) => [...state, action.id];
 
 function addReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
-        case COURSE_ADD: {
+        case COURSE_ADD:
             return applyAddCourse(state, action);
-        }
         default:
             return state;
     }

@@ -8,27 +8,18 @@ import Search from './Search';
 import Timetable from './Timetable';
 import Checkbox from './Checkbox';
 import AdditionalOptions from './AdditionalOptions';
+import {getCurrSubMenu} from '../selectors/utils';
+import {connect} from 'react-redux';
 
 class App extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            active: 'Timetable'
-        };
         this.getActive = this.getActive.bind(this);
-        this.editActive = this.editActive.bind(this);
-    }
-
-    editActive(newActive) {
-        console.log(newActive);
-        this.setState({
-            active: newActive
-        });
     }
 
     getActive() {
-        if (this.state.active === 'Catalog') {
+        if (this.props.active === 'Catalog') {
             return (
                 <div class="row">
                     <div class="column">
@@ -42,7 +33,7 @@ class App extends Component {
             );
         }
 
-        if (this.state.active === 'Timetable') {
+        if (this.props.active === 'Timetable') {
             return (
                 <div class="row">
                     <Timetable />
@@ -57,7 +48,7 @@ class App extends Component {
                 <Navbar />
                 <div class="row">
                     <div class="sub-menu-column">
-                        <SubMenu handler={this.editActive} />
+                        <SubMenu />
                     </div>
                     <div class="main-container">{this.getActive()}</div>
                 </div>
@@ -68,4 +59,8 @@ class App extends Component {
     }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    active: getCurrSubMenu(state)
+});
+
+export default connect(mapStateToProps)(App);

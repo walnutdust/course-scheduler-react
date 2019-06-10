@@ -1,7 +1,15 @@
 import React from 'react';
 import './SubMenu.css';
+import {connect} from 'react-redux';
+import {doSubmenuChange} from '../actions/utils';
 
 const SubMenu = ({handler}) => {
+    // editActive(newActive) {
+    // console.log(newActive);
+    // this.setState({
+    // active: newActive
+    // });
+    // }
     const subSelection = (event) => {
         const allListItems = event.currentTarget.parentElement.parentElement.children;
         for (let child of allListItems) {
@@ -33,4 +41,13 @@ const SubMenu = ({handler}) => {
     );
 };
 
-export default SubMenu;
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+    handler: (newState) => dispatch(doSubmenuChange(newState))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(SubMenu);

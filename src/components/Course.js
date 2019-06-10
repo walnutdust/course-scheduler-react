@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Course.css';
+import {connect} from 'react-redux';
 
 const Course = ({course}) => {
     const START_F = '20190905';
