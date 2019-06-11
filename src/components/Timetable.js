@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {doAddCourse} from '../actions/course';
 import {getAddedCourses} from '../selectors/course';
+import Schedule from './Schedule';
 
 class Timetable extends Component {
     constructor(props) {
@@ -12,7 +13,14 @@ class Timetable extends Component {
         console.log(this.props.added);
         return (
             <div class="timetable">
-                {(this.props.added || []).map((course) => course.COURSE_TITLE_LONG)}
+                <Schedule />
+                <div class="added">
+                    <span>Added Courses:</span>
+                    {(this.props.added || []).map((course) => course.COURSE_TITLE_LONG)}
+                </div>
+                <div class="bookmarked">
+                    <span>Bookmarked Courses:</span>
+                </div>
             </div>
         );
     }

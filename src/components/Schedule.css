@@ -1,0 +1,72 @@
+.day {
+    line-height: 50px;
+    height: 50px;
+    display: block;
+    width: 200%;
+}
+
+.timetable {
+    width: 100%;
+}
+
+.hour {
+    width: calc(100% / 14);
+    border: 1px solid blueviolet;
+    display: inline-block;
+}
+
+.hour-title {
+    width: 6%;
+    display: inline-block;
+}
+
+.hour-labels {
+    height: 20px;
+    display: block;
+    width: 200%;
+}
+
+.schedule {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 120%;
+}
+
+.day-title {
+    display: inline-block;
+    width: 2%;
+}
+
+.odd {
+    background-color: #ccc;
+}
+
+.course-slot {
+    position: relative;
+    background-color: orange;
+    height: 90%;
+    top: -5px;
+    display: inline-block;
+    border-bottom: 2px solid red;
+    line-height: 40px;
+}
+
+.course-containers {
+    border: 1px solid blueviolet;
+    display: inline-block;
+    width: 84%;
+    background: repeating-linear-gradient(
+        to right,
+        #fff 0% calc(100% / 14),
+        #bbb calc(100% / 14) calc(200% / 14)
+    );
+}
+
+.schedule ol {
+    padding-left: 0;
+}
+
+.buffer {
+    width: 1.9%;
+    display: inline-block;
+}
