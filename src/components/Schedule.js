@@ -29,24 +29,24 @@ const Schedule = ({added}) => {
         if (slot.length === 0) return;
         const leftAttr = ((parseInt(slot[0][0]) - 8 * 60) * (100 / 14)) / 60 + '%';
         const widthAttr = (parseInt(slot[0][1]) * (100 / 14)) / 60 + '%';
-        console.log(slot);
-        console.log(slot[0]);
-        console.log(widthAttr);
 
         return (
             <div class="course-slot" style={{left: leftAttr, width: widthAttr}}>
-                !!!
+                <div class="course-slot-title">Title</div>
+                <div>Type</div>
+                <div>Location</div>
+                <div>Time</div>
             </div>
         );
     };
 
     const DayComponent = (day) => {
         return (
-            <li class="day">
+            <li class="day row">
                 <div class="day-title">{day}</div>
+                {}
                 <div class="course-containers">
                     {courseDay[day].map((slot) => CourseSlot(slot))}
-                    &nbsp;
                 </div>
             </li>
         );

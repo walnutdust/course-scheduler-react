@@ -53,7 +53,7 @@ class App extends Component {
                     <div class="main-container">{this.getActive()}</div>
                 </div>
 
-                <Footer />
+                
             </div>
         );
     }
