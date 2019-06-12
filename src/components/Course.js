@@ -296,8 +296,7 @@ const Course = ({course, onBookmark, onAdd}) => {
     const courseButtons = () => {
         return (
             <div class="course-buttons">
-                <button onClick={() => onAdd(course)}>Add to Calendar</button>
-                <button onClick={() => onBookmark(course)}>Bookmark</button>
+                <button onClick={() => onAdd(course)}><i className="material-icons">calendar_today</i></button>
             </div>
         );
     };
@@ -310,13 +309,16 @@ const Course = ({course, onBookmark, onAdd}) => {
     return (
         <div class="course" onClick={toggleBody}>
             <div class="course-header">
-                <div class="course-title">
-                    {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (
-                    {SSR_COMPONENT})
+                <div class="row">
+                    <div class="course-title">
+                        {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (
+                        {SSR_COMPONENT})
+                    </div>
+                    {courseButtons()}
                 </div>
+
                 <span>{instructors()}</span>
                 <span>{courseTime()}</span>
-                {courseButtons()}
             </div>
 
             <div class="course-body">

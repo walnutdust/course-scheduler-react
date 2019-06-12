@@ -3,28 +3,25 @@ import {connect} from 'react-redux';
 import {doAddCourse} from '../actions/course';
 import {getAddedCourses} from '../selectors/course';
 import Schedule from './Schedule';
+import Course from './Course';
 
-class Timetable extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Timetable = ({added}) => {
+    const timetableCourse = (course) => {
+        return <Course course={course} />;
+    };
 
-    render() {
-        console.log(this.props.added);
-        return (
-            <div class="timetable">
-                <Schedule />
-                <div class="added">
-                    <span>Added Courses:</span>
-                    {(this.props.added || []).map((course) => course.COURSE_TITLE_LONG)}
-                </div>
-                <div class="bookmarked">
-                    <span>Bookmarked Courses:</span>
-                </div>
+    console.log(added);
+
+    return (
+        <div class="timetable">
+            <Schedule />
+            <div class="added">
+                <span>Added Courses:</span>
+                {(added || []).map((course) => timetableCourse(course))}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 const mapStateToProps = (state) => ({
     added: getAddedCourses(state)
