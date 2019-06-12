@@ -30,7 +30,8 @@
 .schedule {
     overflow-x: scroll;
     overflow-y: hidden;
-    height: 90%;
+    height: 350px;
+    margin: 10px;
 }
 
 .day-title {

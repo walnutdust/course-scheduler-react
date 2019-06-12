@@ -4,6 +4,7 @@ import {doAddCourse} from '../actions/course';
 import {getAddedCourses} from '../selectors/course';
 import Schedule from './Schedule';
 import Course from './Course';
+import './Timetable.css';
 
 const Timetable = ({added}) => {
     const timetableCourse = (course) => {
@@ -16,7 +17,7 @@ const Timetable = ({added}) => {
         <div class="timetable">
             <Schedule />
             <div class="added">
-                <span>Added Courses:</span>
+                <span class="added-courses">Added Courses:</span>
                 {(added || []).map((course) => timetableCourse(course))}
             </div>
         </div>

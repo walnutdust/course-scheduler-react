@@ -37,9 +37,26 @@ const Schedule = ({added}) => {
                 <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
                 <div>{course.SSR_COMPONENT + ' [' + course.CLASS_SECTION + ']'}</div>
                 <div>{course.FACIL_DESCR1}</div>
-                <div>{slot[0][0]}</div>
+                <div>{stringTime(slot[0][0], slot[0][1])}</div>
             </div>
         );
+    };
+
+    const stringTime = (start, duration) => {
+        const startTime = Math.floor(start / 60) + ':' + padZero(start % 60, 2);
+        const end = start + duration;
+        const endTime = Math.floor(end / 60) + ':' + padZero(end % 60, 2);
+        return startTime + ' - ' + endTime;
+    };
+
+    const padZero = (number, width) => {
+        width -= number.toString().length;
+
+        if (width > 0) {
+            return new Array(width + 1).join('0') + number;
+        }
+
+        return number.toString();
     };
 
     const DayComponent = (day) => {

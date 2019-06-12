@@ -296,7 +296,9 @@ const Course = ({course, onBookmark, onAdd}) => {
     const courseButtons = () => {
         return (
             <div class="course-buttons">
-                <button onClick={() => onAdd(course)}><i className="material-icons">calendar_today</i></button>
+                <button onClick={() => onAdd(course)}>
+                    <i className="material-icons">calendar_today</i>
+                </button>
             </div>
         );
     };
