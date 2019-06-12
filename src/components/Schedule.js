@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 import {doAddCourse} from '../actions/course';
 import {getAddedCourses} from '../selectors/course';
 import './Schedule.css';
-import Course from './Course';
 
 const Schedule = ({added}) => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
@@ -29,13 +28,16 @@ const Schedule = ({added}) => {
         if (slot.length === 0) return;
         const leftAttr = ((parseInt(slot[0][0]) - 8 * 60) * (100 / 14)) / 60 + '%';
         const widthAttr = (parseInt(slot[0][1]) * (100 / 14)) / 60 + '%';
+        const course = slot[0][2];
+
+        console.log(course);
 
         return (
             <div class="course-slot" style={{left: leftAttr, width: widthAttr}}>
-                <div class="course-slot-title">Title</div>
-                <div>Type</div>
-                <div>Location</div>
-                <div>Time</div>
+                <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
+                <div>{course.SSR_COMPONENT + ' [' + course.CLASS_SECTION + ']'}</div>
+                <div>{course.FACIL_DESCR1}</div>
+                <div>{slot[0][0]}</div>
             </div>
         );
     };
@@ -141,7 +143,7 @@ const Schedule = ({added}) => {
         const parsedSlots = courseTimeParsed(course);
 
         for (const slot of parsedSlots) {
-            courseDay[slot[0]][0].push([slot[1], slot[2]]);
+            courseDay[slot[0]][0].push([slot[1], slot[2], course]);
         }
     }
 
