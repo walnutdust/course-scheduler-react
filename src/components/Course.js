@@ -1,17 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './Course.css';
 import {connect} from 'react-redux';
 import {doAddCourse, doBookmarkCourse} from '../actions/course';
 import {getAddedCourses, getBookmarkedCourses} from '../selectors/course';
+import {START_F, END_F, START_W, END_W, START_S, END_S} from '../constants/constants';
 
-const Course = ({course, onBookmark, onAdd}) => {
-    const START_F = '20190905';
-    const END_F = '20191207';
-    const START_W = '20200106';
-    const END_W = '20200130';
-    const START_S = '20200205';
-    const END_S = '20200515';
-
+const Course = ({added, course, location, onAdd, onBookmark}) => {
     const {
         WMS_ACAD_YEAR,
         OFFERED,
@@ -293,34 +287,35 @@ const Course = ({course, onBookmark, onAdd}) => {
         return result.slice(1, -1);
     };
 
-    const courseButtons = () => {
-        return (
-            <div class="course-buttons">
-                <button onClick={() => onAdd(course)}>
-                    <i className="material-icons">calendar_today</i>
-                </button>
-            </div>
-        );
-    };
-
     const toggleBody = (event) => {
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
 
+    const isAdded = added.indexOf(course) !== -1;
+
+    const courseButtons = () => {
+        return (
+            <div class="course-buttons">
+                <button onClick={() => onAdd(course)}>
+                    {isAdded ? 'Remove from Calendar' : 'Add to Calendar'}
+                </button>
+            </div>
+        );
+    };
+
     return (
-        <div class="course" onClick={toggleBody}>
+        <div class={isAdded ? 'course added-course' : 'course'} onClick={toggleBody}>
             <div class="course-header">
+                <div class="row course-title">
+                    {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (
+                    {SSR_COMPONENT})
+                </div>
                 <div class="row">
-                    <div class="course-title">
-                        {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (
-                        {SSR_COMPONENT})
-                    </div>
+                    <span>{instructors()}</span>
+                    <span>{courseTime()}</span>
                     {courseButtons()}
                 </div>
-
-                <span>{instructors()}</span>
-                <span>{courseTime()}</span>
             </div>
 
             <div class="course-body">
