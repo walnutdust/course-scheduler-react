@@ -1,3 +1,5 @@
 export const COURSE_ADD = 'COURSE_ADD';
+export const COURSE_REMOVE = 'COURSE_REMOVE';
+export const COURSE_HIDE = 'COURSE_HIDE';
+export const COURSE_UNHIDE = 'COURSE_UNHIDE';
 export const SUBMENU_CHANGE = 'SUBMENU_CHANGE';
-export const COURSE_BOOKMARK = 'COURSE_BOOKMARK';

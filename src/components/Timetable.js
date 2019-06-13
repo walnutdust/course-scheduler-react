@@ -1,24 +1,19 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {doAddCourse} from '../actions/course';
 import {getAddedCourses} from '../selectors/course';
 import Schedule from './Schedule';
 import Course from './Course';
 import './Timetable.css';
 
 const Timetable = ({added}) => {
-    const timetableCourse = (course) => {
-        return <Course course={course} />;
-    };
-
-    console.log(added);
-
     return (
         <div class="timetable">
             <Schedule />
             <div class="added">
                 <span class="added-courses">Added Courses:</span>
-                {(added || []).map((course) => timetableCourse(course))}
+                {(added || []).map((course) => (
+                    <Course course={course} location="timetable" />
+                ))}
             </div>
         </div>
     );
@@ -28,11 +23,4 @@ const mapStateToProps = (state) => ({
     added: getAddedCourses(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onAdd: (course) => dispatch(doAddCourse(course))
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Timetable);
+export default connect(mapStateToProps)(Timetable);

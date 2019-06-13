@@ -1,12 +1,12 @@
 import {combineReducers} from 'redux';
 import courseReducer from './course';
-import bookmarkReducer from './bookmark';
+import hideReducer from './hide';
 import addReducer from './added';
 import utilReducer from './utils';
 
 const rootReducer = combineReducers({
     courseState: courseReducer,
-    bookmarkedState: bookmarkReducer,
+    hiddenState: hideReducer,
     addedState: addReducer,
     utilState: utilReducer
 });

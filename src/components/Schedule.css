@@ -39,10 +39,6 @@
     width: 3%;
 }
 
-.odd {
-    background-color: #ccc;
-}
-
 .course-slot {
     position: relative;
     background-color: orange;
@@ -71,7 +67,7 @@
     background: repeating-linear-gradient(
         to right,
         #fff 0% calc(100% / 14),
-        #bbb calc(100% / 14) calc(200% / 14)
+        #eee calc(100% / 14) calc(200% / 14)
     );
 }
 

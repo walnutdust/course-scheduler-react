@@ -1,7 +1,9 @@
-const isAdded = (addedIds) => (course) => addedIds.indexOf(course.objectID) !== -1;
+const isNotHidden = (hiddenCourses) => (course) => hiddenCourses.indexOf(course) === -1;
 
 const getAddedCourses = ({addedState}) => addedState;
-const getBookmarkedCourses = ({bookmarkState}) => bookmarkState;
+const getHiddenCourses = ({hiddenState}) => hiddenState;
+const getUnhiddenCourses = ({addedState, hiddenState}) =>
+    addedState.filter(isNotHidden(hiddenState));
 const getAllCourses = ({courseState}) => courseState;
 
-export {getAddedCourses, getBookmarkedCourses, getAllCourses};
+export {getAddedCourses, getHiddenCourses, getUnhiddenCourses, getAllCourses};

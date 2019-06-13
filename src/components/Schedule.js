@@ -1,10 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {doAddCourse} from '../actions/course';
-import {getAddedCourses} from '../selectors/course';
+import {getUnhiddenCourses} from '../selectors/course';
 import './Schedule.css';
 
-const Schedule = ({added}) => {
+const Schedule = ({unhidden}) => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     const startHour = 8;
     const endHour = 22;
@@ -29,8 +28,6 @@ const Schedule = ({added}) => {
         const leftAttr = ((parseInt(slot[0][0]) - 8 * 60) * (100 / 14)) / 60 + '%';
         const widthAttr = (parseInt(slot[0][1]) * (100 / 14)) / 60 + '%';
         const course = slot[0][2];
-
-        console.log(course);
 
         return (
             <div class="course-slot" style={{left: leftAttr, width: widthAttr}}>
@@ -156,7 +153,7 @@ const Schedule = ({added}) => {
         return result;
     };
 
-    for (const course of added) {
+    for (const course of unhidden) {
         const parsedSlots = courseTimeParsed(course);
 
         for (const slot of parsedSlots) {
@@ -178,14 +175,7 @@ const Schedule = ({added}) => {
 };
 
 const mapStateToProps = (state) => ({
-    added: getAddedCourses(state)
+    unhidden: getUnhiddenCourses(state)
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    onAdd: (course) => dispatch(doAddCourse(course))
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Schedule);
+export default connect(mapStateToProps)(Schedule);

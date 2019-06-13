@@ -1,13 +1,23 @@
-import {COURSE_ADD, COURSE_BOOKMARK} from '../constants/actionTypes';
-
-const doBookmarkCourse = (course) => ({
-    type: COURSE_BOOKMARK,
-    course
-});
+import {COURSE_ADD, COURSE_REMOVE, COURSE_HIDE, COURSE_UNHIDE} from '../constants/actionTypes';
 
 const doAddCourse = (course) => ({
     type: COURSE_ADD,
     course
 });
 
-export {doAddCourse, doBookmarkCourse};
+const doRemoveCourse = (course) => ({
+    type: COURSE_REMOVE,
+    course
+});
+
+const doHideCourse = (course) => ({
+    type: COURSE_HIDE,
+    course
+});
+
+const doUnhideCourse = (course) => ({
+    type: COURSE_UNHIDE,
+    course
+});
+
+export {doAddCourse, doRemoveCourse, doHideCourse, doUnhideCourse};

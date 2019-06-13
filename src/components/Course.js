@@ -1,11 +1,11 @@
 import React from 'react';
 import './Course.css';
 import {connect} from 'react-redux';
-import {doAddCourse, doBookmarkCourse} from '../actions/course';
-import {getAddedCourses, getBookmarkedCourses} from '../selectors/course';
+import {doAddCourse, doRemoveCourse, doHideCourse, doUnhideCourse} from '../actions/course';
+import {getAddedCourses, getHiddenCourses, getUnhiddenCourses} from '../selectors/course';
 import {START_F, END_F, START_W, END_W, START_S, END_S} from '../constants/constants';
 
-const Course = ({added, course, location, onAdd, onBookmark}) => {
+const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnhide}) => {
     const {
         WMS_ACAD_YEAR,
         OFFERED,
@@ -293,15 +293,28 @@ const Course = ({added, course, location, onAdd, onBookmark}) => {
     };
 
     const isAdded = added.indexOf(course) !== -1;
+    const isHidden = hidden.indexOf(course) !== -1;
 
     const courseButtons = () => {
-        return (
-            <div class="course-buttons">
-                <button onClick={() => onAdd(course)}>
-                    {isAdded ? 'Remove from Calendar' : 'Add to Calendar'}
-                </button>
-            </div>
-        );
+        if (location === 'timetable')
+            return (
+                <div class="course-buttons">
+                    <button onClick={() => onRemove(course)}>
+                        <i class="material-icons">delete_forever</i>
+                    </button>
+                    <button onClick={() => (isHidden ? onUnhide(course) : onHide(course))}>
+                        <i class="material-icons">{isHidden ? 'visibility' : 'visibility_off'}</i>
+                    </button>
+                </div>
+            );
+        else
+            return (
+                <div class="course-buttons">
+                    <button onClick={() => (isAdded ? onRemove(course) : onAdd(course))}>
+                        {isAdded ? 'Remove from Calendar' : 'Add to Calendar'}
+                    </button>
+                </div>
+            );
     };
 
     return (
@@ -345,13 +358,16 @@ const Course = ({added, course, location, onAdd, onBookmark}) => {
 };
 
 const mapStateToProps = (state) => ({
-    bookmarked: getBookmarkedCourses(state),
+    hidden: getHiddenCourses(state),
+    unhidden: getUnhiddenCourses(state),
     added: getAddedCourses(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onBookmark: (course) => dispatch(doBookmarkCourse(course)),
-    onAdd: (course) => dispatch(doAddCourse(course))
+    onAdd: (course) => dispatch(doAddCourse(course)),
+    onRemove: (course) => dispatch(doRemoveCourse(course)),
+    onHide: (course) => dispatch(doHideCourse(course)),
+    onUnhide: (course) => dispatch(doUnhideCourse(course))
 });
 
 export default connect(
