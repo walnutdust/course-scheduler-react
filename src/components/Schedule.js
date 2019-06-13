@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getUnhiddenCourses} from '../selectors/course';
+import {getUnhiddenCourses, getAddedCourses} from '../selectors/course';
 import './Schedule.css';
+import {PALATTE, BORDER_PALATTE} from '../constants/constants';
 
-const Schedule = ({unhidden}) => {
+const Schedule = ({added, unhidden}) => {
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
     const startHour = 8;
     const endHour = 22;
@@ -29,12 +30,20 @@ const Schedule = ({unhidden}) => {
         const widthAttr = (parseInt(slot[1]) * (100 / 14)) / 60 + '%';
         const course = slot[2];
 
+        const index = added.indexOf(course);
+
         return (
-            <div class="course-slot" style={{left: leftAttr, width: widthAttr}}>
+            <div
+                class="course-slot"
+                style={{
+                    left: leftAttr,
+                    width: widthAttr,
+                    backgroundColor: PALATTE[index % PALATTE.length],
+                    borderColor: BORDER_PALATTE[index % BORDER_PALATTE.length]
+                }}>
                 <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
                 <div>{course.SSR_COMPONENT + ' [' + course.CLASS_SECTION + ']'}</div>
-                <div>{course.FACIL_DESCR1}</div>
-                <div>{stringTime(slot[0], slot[1])}</div>
+                <div>{stringTime(slot[0], slot[1]) + ' ' + (course.FACIL_DESCR1 || '')}</div>
             </div>
         );
     };
@@ -214,6 +223,7 @@ const Schedule = ({unhidden}) => {
 };
 
 const mapStateToProps = (state) => ({
+    added: getAddedCourses(state),
     unhidden: getUnhiddenCourses(state)
 });
 

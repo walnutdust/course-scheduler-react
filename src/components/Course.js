@@ -3,7 +3,7 @@ import './Course.css';
 import {connect} from 'react-redux';
 import {doAddCourse, doRemoveCourse, doHideCourse, doUnhideCourse} from '../actions/course';
 import {getAddedCourses, getHiddenCourses, getUnhiddenCourses} from '../selectors/course';
-import {START_F, END_F, START_W, END_W, START_S, END_S} from '../constants/constants';
+import {START_F, END_F, START_W, END_W, START_S, END_S, PALATTE} from '../constants/constants';
 
 const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnhide}) => {
     const {
@@ -293,7 +293,8 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
 
-    const isAdded = added.indexOf(course) !== -1;
+    const addIndex = added.indexOf(course);
+    const isAdded = addIndex !== -1;
     const isHidden = hidden.indexOf(course) !== -1;
 
     const courseButtons = () => {
@@ -319,7 +320,10 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     };
 
     return (
-        <div class={isAdded ? 'course added-course' : 'course'} onClick={toggleBody}>
+        <div
+            class="course"
+            style={isAdded ? {backgroundColor: PALATTE[addIndex % PALATTE.length]} : {}}
+            onClick={toggleBody}>
             <div class="course-header">
                 <div class="row course-title">
                     {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (

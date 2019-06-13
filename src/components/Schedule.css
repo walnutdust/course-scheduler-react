@@ -49,16 +49,19 @@
 .course-slot {
     position: relative;
     background-color: orange;
-    height: 90%;
+    height: 88%;
     display: inline-block;
-    border-bottom: 2px solid red;
+    border-bottom: 3px solid red;
+    border-right: 2px solid red;
     line-height: 40px;
+    padding-top: 2px;
+    padding-left: 4px;
+    border-radius: 4px;
 }
 
 .course-slot div {
-    font-size: 10px;
-    line-height: 10px;
-    height: 10px;
+    font-size: 13px;
+    line-height: 13px;
 }
 
 .course-slot-title {
