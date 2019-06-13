@@ -8,6 +8,7 @@ import './Timetable.css';
 const Timetable = ({added}) => {
     return (
         <div class="timetable">
+            <div class="timetable-header">Fall Semester Timetable</div>
             <Schedule />
             <div class="added">
                 <span class="added-courses">Added Courses:</span>

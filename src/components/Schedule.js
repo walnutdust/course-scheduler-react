@@ -5,7 +5,7 @@ import './Schedule.css';
 import {PALATTE, BORDER_PALATTE} from '../constants/constants';
 
 const Schedule = ({added, unhidden}) => {
-    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+    const days = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
     const startHour = 8;
     const endHour = 22;
     const hours = [];
@@ -13,15 +13,15 @@ const Schedule = ({added, unhidden}) => {
         hours.push(i);
     }
     const courseDay = {
-        Mon: [[]],
-        Tue: [[]],
-        Wed: [[]],
-        Thu: [[]],
-        Fri: [[]]
+        MON: [[]],
+        TUE: [[]],
+        WED: [[]],
+        THU: [[]],
+        FRI: [[]]
     };
 
     const HourTitles = (hour) => {
-        return <div class="hour-title">{hour}</div>;
+        return <div class="hour-title">{padZero(hour, 2) + '00'}</div>;
     };
 
     const CourseSlot = (slot) => {
@@ -78,7 +78,7 @@ const Schedule = ({added, unhidden}) => {
 
     const DayCourseComponent = (row) => {
         return (
-            <div class="column">
+            <div class="column course-day">
                 {row.map((slot) => {
                     return <div class="course-containers">{CourseSlot(slot)}</div>;
                 })}
@@ -142,7 +142,7 @@ const Schedule = ({added, unhidden}) => {
     };
 
     const getCourseDays = (days) => {
-        if (days === 'M-F') return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+        if (days === 'M-F') return ['MON', 'TUE', 'WED', 'THU', 'FRI'];
 
         const splitDays = days.split('');
         const result = [];
@@ -150,19 +150,19 @@ const Schedule = ({added, unhidden}) => {
         for (const day of splitDays) {
             switch (day) {
                 case 'M':
-                    result.push('Mon');
+                    result.push('MON');
                     break;
                 case 'T':
-                    result.push('Tue');
+                    result.push('TUE');
                     break;
                 case 'W':
-                    result.push('Wed');
+                    result.push('WED');
                     break;
                 case 'R':
-                    result.push('Thu');
+                    result.push('THU');
                     break;
                 case 'F':
-                    result.push('Fri');
+                    result.push('FRI');
                     break;
                 default:
                     break;
@@ -211,13 +211,11 @@ const Schedule = ({added, unhidden}) => {
 
     return (
         <div class="schedule">
-            <ol>
-                <li class="hour-labels">
-                    <div class="buffer">&nbsp;</div>
-                    {hours.map((hour) => HourTitles(hour))}
-                </li>
-                {days.map((day) => DayComponent(day))}
-            </ol>
+            <div class="hour-labels">
+                <div class="buffer">&nbsp;</div>
+                {hours.map((hour) => HourTitles(hour))}
+            </div>
+            <div class="days-container">{days.map((day) => DayComponent(day))}</div>
         </div>
     );
 };

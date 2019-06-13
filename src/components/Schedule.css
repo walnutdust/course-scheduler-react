@@ -2,41 +2,39 @@
     line-height: 50px;
     min-height: 1em;
     display: flex;
-    width: 200%;
+    width: 150%;
 }
 
 .timetable {
     width: 100%;
 }
 
-.hour {
-    width: calc(100% / 14);
-    border: 1px solid blueviolet;
-    display: inline-block;
-}
-
 .hour-title {
     width: calc(7% * 0.971);
     display: inline-block;
+    font-weight: 600;
 }
 
 .hour-labels {
     height: 20px;
     display: block;
-    width: 200%;
+    width: 150%;
+    border: none;
+    margin-bottom: 5px;
 }
 
 .schedule {
     overflow-x: scroll;
     overflow-y: hidden;
-    margin: 10px;
+    margin: 30px;
+    padding-bottom: 20px;
 }
 
 .day-title {
     display: inline-block;
     width: 3%;
     text-align: center;
-    border: 1px solid blueviolet;
+    border: 0.5px solid #ddd;
 }
 
 .day-title span {
@@ -44,6 +42,7 @@
     flex-direction: column;
     height: 100%;
     justify-content: center;
+    font-weight: 700;
 }
 
 .course-slot {
@@ -69,7 +68,6 @@
 }
 
 .course-containers {
-    border: 1px solid blueviolet;
     display: inline-block;
     position: relative;
     height: 100%;
@@ -80,12 +78,19 @@
         #eee calc(100% / 14) calc(200% / 14)
     );
 }
+.course-day {
+    border: 0.5px solid #ddd;
+}
 
 .schedule ol {
     padding-left: 0;
 }
 
 .buffer {
-    width: 2.9%;
+    width: 2.3%;
     display: inline-block;
+}
+
+.days-container {
+    border: 0.5px solid #ddd;
 }
