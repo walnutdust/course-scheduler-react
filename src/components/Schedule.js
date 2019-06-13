@@ -25,16 +25,16 @@ const Schedule = ({unhidden}) => {
 
     const CourseSlot = (slot) => {
         if (slot.length === 0) return;
-        const leftAttr = ((parseInt(slot[0][0]) - 8 * 60) * (100 / 14)) / 60 + '%';
-        const widthAttr = (parseInt(slot[0][1]) * (100 / 14)) / 60 + '%';
-        const course = slot[0][2];
+        const leftAttr = ((parseInt(slot[0]) - 8 * 60) * (100 / 14)) / 60 + '%';
+        const widthAttr = (parseInt(slot[1]) * (100 / 14)) / 60 + '%';
+        const course = slot[2];
 
         return (
             <div class="course-slot" style={{left: leftAttr, width: widthAttr}}>
                 <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
                 <div>{course.SSR_COMPONENT + ' [' + course.CLASS_SECTION + ']'}</div>
                 <div>{course.FACIL_DESCR1}</div>
-                <div>{stringTime(slot[0][0], slot[0][1])}</div>
+                <div>{stringTime(slot[0], slot[1])}</div>
             </div>
         );
     };
@@ -59,12 +59,22 @@ const Schedule = ({unhidden}) => {
     const DayComponent = (day) => {
         return (
             <li class="day row">
-                <div class="day-title">{day}</div>
-                {}
-                <div class="course-containers">
-                    {courseDay[day].map((slot) => CourseSlot(slot))}
+                <div class="day-title">
+                    <span>{day}</span>
                 </div>
+                {(courseDay[day] || []).map((row) => DayCourseComponent(row))}
             </li>
+        );
+    };
+
+    const DayCourseComponent = (row) => {
+        return (
+            <div class="column">
+                {row.map((slot) => {
+                    return <div class="course-containers">{CourseSlot(slot)}</div>;
+                })}
+                {row.length === 0 && <div class="course-containers" />}
+            </div>
         );
     };
 
@@ -153,11 +163,40 @@ const Schedule = ({unhidden}) => {
         return result;
     };
 
+    const checkConflict = (this_slot, other_slot) => {
+        if (this_slot[1] < other_slot[1] + other_slot[2] && this_slot[1] > other_slot[1])
+            return true;
+        if (other_slot[1] < this_slot[1] + this_slot[2] && other_slot[1] > this_slot[1])
+            return true;
+
+        return false;
+    };
+
+    const addSlot = (slot, course) => {
+        for (const dayRow of courseDay[slot[0]]) {
+            let conflict_present = false;
+            for (const other_slot of dayRow) {
+                if (checkConflict(slot, other_slot)) {
+                    conflict_present = true;
+                    break;
+                }
+            }
+
+            if (conflict_present) continue;
+            else {
+                dayRow.push([slot[1], slot[2], course]);
+                return;
+            }
+        }
+
+        courseDay[slot[0]].push([[slot[1], slot[2], course]]);
+    };
+
     for (const course of unhidden) {
         const parsedSlots = courseTimeParsed(course);
 
         for (const slot of parsedSlots) {
-            courseDay[slot[0]][0].push([slot[1], slot[2], course]);
+            addSlot(slot, course);
         }
     }
 

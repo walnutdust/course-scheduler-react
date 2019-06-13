@@ -288,6 +288,7 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     };
 
     const toggleBody = (event) => {
+        if (event.target.type === 'submit') return;
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
@@ -303,7 +304,7 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
                         <i class="material-icons">delete_forever</i>
                     </button>
                     <button onClick={() => (isHidden ? onUnhide(course) : onHide(course))}>
-                        <i class="material-icons">{isHidden ? 'visibility' : 'visibility_off'}</i>
+                        <i class="material-icons">{isHidden ? 'visibility_off' : 'visibility'}</i>
                     </button>
                 </div>
             );

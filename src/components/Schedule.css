@@ -1,6 +1,5 @@
 .day {
     line-height: 50px;
-    height: 50px;
     min-height: 1em;
     display: flex;
     width: 200%;
@@ -17,7 +16,7 @@
 }
 
 .hour-title {
-    width: 6%;
+    width: calc(7% * 0.971);
     display: inline-block;
 }
 
@@ -30,13 +29,21 @@
 .schedule {
     overflow-x: scroll;
     overflow-y: hidden;
-    height: 350px;
     margin: 10px;
 }
 
 .day-title {
     display: inline-block;
     width: 3%;
+    text-align: center;
+    border: 1px solid blueviolet;
+}
+
+.day-title span {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
 }
 
 .course-slot {
@@ -62,8 +69,8 @@
     border: 1px solid blueviolet;
     display: inline-block;
     position: relative;
-    width: 84%;
     height: 100%;
+    width: 98%;
     background: repeating-linear-gradient(
         to right,
         #fff 0% calc(100% / 14),
