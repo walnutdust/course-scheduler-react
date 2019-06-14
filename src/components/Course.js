@@ -288,7 +288,8 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     };
 
     const toggleBody = (event) => {
-        if (event.target.type === 'submit') return;
+        console.log(event.target);
+        if (event.target.localName !== 'div') return;
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
