@@ -89,9 +89,10 @@ const Schedule = ({added, unhidden}) => {
 
     const courseTimeParsed = (course) => {
         const result = [];
+        console.log(course);
 
         // Check for tutorials or TBA?
-        if (course.WMS_STND_MTG_PAT1 !== ' ') {
+        if (course.WMS_STND_MTG_PAT1 !== ' ' && course.WMS_STND_MTG_PAT1 !== 'TBA') {
             const courseDays = getCourseDays(course.WMS_STND_MTG_PAT1);
 
             for (const day of courseDays) {
