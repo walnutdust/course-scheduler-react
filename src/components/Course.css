@@ -32,3 +32,40 @@
 .added-course {
     background-color: paleturquoise;
 }
+
+.d1 {
+    background-color: rgb(99, 131, 133);
+}
+.d2 {
+    background-color: rgb(99, 131, 133);
+}
+.d3 {
+    background-color: rgb(99, 131, 133);
+}
+.wi {
+    background-color: rgb(143, 149, 100);
+}
+.qfr {
+    background-color: rgb(143, 149, 100);
+}
+.dpe {
+    background-color: rgb(143, 149, 100);
+}
+
+.dreq {
+    width: 22px;
+    line-height: 22px;
+    display: inline-block;
+    overflow: hidden;
+    font-size: 14px;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+    font-style: normal;
+    margin: 0 2px 0 2px;
+}
+
+.course .column .row {
+    line-height: 25px;
+}

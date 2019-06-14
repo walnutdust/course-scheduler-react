@@ -288,7 +288,6 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     };
 
     const toggleBody = (event) => {
-        console.log(event.target);
         if (event.target.localName !== 'div') return;
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
@@ -320,6 +319,31 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
             );
     };
 
+    const distributionIcons = () => {
+        if (WMS_ATTR_SRCH) {
+            return WMS_ATTR_SRCH.split(',').map((attr) => distributionIcon(attr));
+        }
+    };
+
+    const distributionIcon = (dist) => {
+        switch (dist) {
+            case 'DIV_D1':
+                return <i class={'dreq d1'}>I</i>;
+            case 'DIV_D2':
+                return <i class={'dreq d2'}>II</i>;
+            case 'DIV_D3':
+                return <i class={'dreq d3'}>III</i>;
+            case 'WAC_WAC':
+                return <i class={'dreq wi'}>W</i>;
+            case 'DPE_DPE':
+                return <i class={'dreq dpe'}>D</i>;
+            case 'QFR_QFR':
+                return <i class={'dreq qfr'}>Q</i>;
+            default:
+                return;
+        }
+    };
+
     return (
         <div
             class="course"
@@ -327,12 +351,21 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
             onClick={toggleBody}>
             <div class="course-header">
                 <div class="row course-title">
-                    {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {COURSE_TITLE_LONG} (
-                    {SSR_COMPONENT})
+                    {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {distributionIcons()}
+                    {COURSE_TITLE_LONG} ({SSR_COMPONENT})
                 </div>
                 <div class="row">
-                    <span>{instructors()}</span>
-                    <span>{courseTime()}</span>
+                    <div class="column">
+                        <div class="row">
+                            <span>{instructors()}</span>
+                            <span>{courseTime()}</span>
+                        </div>
+                        <div class="row">
+                            <strong class="course-prereqs">Pre-Requisites:&nbsp;</strong>{' '}
+                            {WMS_PREREQS}
+                        </div>
+                    </div>
+
                     {courseButtons()}
                 </div>
             </div>
@@ -345,10 +378,6 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
 
                 <p class="course-enroll-pref">
                     <strong>Enrollment Preferences:</strong> {WMS_RQMT_EVAL}
-                </p>
-
-                <p class="course-prereqs">
-                    <strong>Pre-Requisites:</strong> {WMS_PREREQS}
                 </p>
 
                 <p class="course-distributions">
