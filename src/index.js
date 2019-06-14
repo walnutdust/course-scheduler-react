@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import store from './store';
-import catalog_data from './data/1920';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
 

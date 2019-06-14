@@ -52,8 +52,6 @@ class App extends Component {
                     </div>
                     <div class="main-container">{this.getActive()}</div>
                 </div>
-
-                
             </div>
         );
     }
