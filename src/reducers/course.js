@@ -5,9 +5,23 @@ const applySearchCourse = (state, param, catalog) => {
     if (param === '') return catalog;
 
     return Object.assign({}, state, {
-        searched: INITIAL_STATE.searched.filter((course) =>
-            course.COURSE_TITLE_LONG.toLowerCase().includes(param)
-        )
+        searched: INITIAL_STATE.searched.filter((course) => {
+            const searchArea = (
+                course.SUBJECT +
+                course.CATALOG_NBR +
+                course.COURSE_TITLE_LONG +
+                course.WMS_DESCR_SRCH
+            ).toLowerCase();
+            let result = true;
+            const queries = param.toLowerCase().split(' ');
+            for (let query of queries) {
+                if (!searchArea.includes(query)) {
+                    result = false;
+                    break;
+                }
+            }
+            return result;
+        })
     });
 };
 

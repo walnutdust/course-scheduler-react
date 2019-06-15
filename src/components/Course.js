@@ -370,7 +370,7 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
                 </div>
             </div>
 
-            <div class="course-body">
+            <div class="course-body" hidden>
                 <p class="course-description">{WMS_DESCR_SRCH}</p>
                 <p class="course-format">
                     <strong>Class Format:</strong> {WMS_CLASS_FORMAT}
