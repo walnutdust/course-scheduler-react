@@ -1,4 +1,7 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {doSearchCourse, doResetLoad, doLoadCourses} from '../actions/course';
+import {getSearchedCourses, getLoadedCourses} from '../selectors/course';
 import './Search.css';
 
 class Search extends Component {
@@ -6,27 +9,18 @@ class Search extends Component {
         super(props);
 
         this.state = {
-            query: ''
+            query: '',
+            group: 1
         };
 
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    onSubmit(event) {
-        const {query} = this.state;
-        if (query) {
-            this.props.onFetchStories(query);
-
-            this.setState({query: ''});
-        }
-
-        event.preventDefault();
     }
 
     onChange(event) {
         const {value} = event.target;
         this.setState({query: value});
+        this.props.onSearch(value);
+        this.props.resetLoad();
     }
 
     render() {
@@ -52,4 +46,18 @@ const Button = ({onClick, className, type = 'button', children}) => (
     </button>
 );
 
-export default Search;
+const mapStateToProps = (state) => ({
+    catalog: getSearchedCourses(state),
+    loadedCourses: getLoadedCourses(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onSearch: (query) => dispatch(doSearchCourse(query)),
+    onLoad: (courses) => dispatch(doLoadCourses(courses)),
+    resetLoad: () => dispatch(doResetLoad())
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Search);

@@ -28,15 +28,14 @@ const doUnhideCourse = (course) => ({
     course
 });
 
-const doSearchCourse = (param, catalog) => ({
+const doSearchCourse = (param) => ({
     type: SEARCH_COURSE,
-    param,
-    catalog
+    param
 });
 
-const doLoadCourses = (courses) => ({
+const doLoadCourses = (newLoadGroup) => ({
     type: LOAD_COURSES,
-    courses
+    newLoadGroup: newLoadGroup
 });
 
 const doResetLoad = () => ({

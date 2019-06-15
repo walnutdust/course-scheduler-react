@@ -2,7 +2,7 @@ import React from 'react';
 import './AdditionalOptions.css';
 import Checkbox from './Checkbox';
 import {connect} from 'react-redux';
-import {getAllCourses} from '../selectors/course';
+import {getSearchedCourses} from '../selectors/course';
 
 const AdditionalOptions = ({catalog}) => {
     const numFound = (length) => {
@@ -140,7 +140,7 @@ const AdditionalOptions = ({catalog}) => {
 };
 
 const mapStateToProps = (state) => ({
-    catalog: getAllCourses(state)
+    catalog: getSearchedCourses(state)
 });
 
 export default connect(mapStateToProps)(AdditionalOptions);
