@@ -28,7 +28,7 @@ const doUnhideCourse = (course) => ({
     course
 });
 
-const doSearchCourse = (param, filters) => ({
+const doSearchCourse = (param = undefined, filters) => ({
     type: SEARCH_COURSE,
     param,
     filters

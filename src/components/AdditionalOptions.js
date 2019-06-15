@@ -3,6 +3,9 @@ import './AdditionalOptions.css';
 import Checkbox from './Checkbox';
 import {connect} from 'react-redux';
 import {getSearchedCourses} from '../selectors/course';
+import {getFilters} from '../selectors/filter';
+import {doSearchCourse} from '../actions/course';
+import {SEMESTERS, DISTRIBUTIONS, DIVISIONS, OTHERS, LEVELS} from '../constants/constants';
 import {
     doToggleConflict,
     doToggleOthers,
@@ -19,7 +22,9 @@ const AdditionalOptions = ({
     divClick,
     othersClick,
     conflictClick,
-    levelClick
+    levelClick,
+    filters,
+    onSearch
 }) => {
     const numFound = (length) => {
         if (length === 1) return <span class="num-found">1 course found</span>;
@@ -33,13 +38,13 @@ const AdditionalOptions = ({
 
     catalog.forEach((course) => {
         switch (course.STRM) {
-            case '1201':
+            case SEMESTERS[0]:
                 courseBySem[0]++;
                 break;
-            case '1202':
+            case SEMESTERS[1]:
                 courseBySem[1]++;
                 break;
-            case '1203':
+            case SEMESTERS[2]:
                 courseBySem[2]++;
                 break;
             default:
@@ -51,15 +56,20 @@ const AdditionalOptions = ({
 
         const attributes = course.WMS_ATTR_SRCH.split(',');
         attributes.forEach((attr) => {
-            if (attr === 'DIV_D1') courseByDiv[0]++;
-            if (attr === 'DIV_D2') courseByDiv[1]++;
-            if (attr === 'DIV_D3') courseByDiv[2]++;
+            if (attr === DIVISIONS[0]) courseByDiv[0]++;
+            if (attr === DIVISIONS[1]) courseByDiv[1]++;
+            if (attr === DIVISIONS[2]) courseByDiv[2]++;
 
-            if (attr === 'DPE_DPE') courseByDist[0]++;
-            if (attr === 'WAC_WAC') courseByDist[1]++;
-            if (attr === 'QFR_QFR') courseByDist[2]++;
+            if (attr === DISTRIBUTIONS[0]) courseByDist[0]++;
+            if (attr === DISTRIBUTIONS[1]) courseByDist[1]++;
+            if (attr === DISTRIBUTIONS[2]) courseByDist[2]++;
         });
     });
+
+    const clickLoader = (funct, param) => {
+        funct(param);
+        onSearch(undefined, filters);
+    };
 
     return (
         <div class="additional-options">
@@ -68,82 +78,82 @@ const AdditionalOptions = ({
             <span class="ul-header">Semester</span>
             <ul class="semester">
                 <li>
-                    <Checkbox onClick={() => semClick(0)} />
+                    <Checkbox onClick={() => clickLoader(semClick, 0)} />
                     Fall ({courseBySem[0]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => semClick(1)} />
+                    <Checkbox onClick={() => clickLoader(semClick, 1)} />
                     Winter ({courseBySem[1]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => semClick(2)} />
+                    <Checkbox onClick={() => clickLoader(semClick, 2)} />
                     Spring ({courseBySem[2]})
                 </li>
             </ul>
             <span class="ul-header">Level</span>
             <ul class="Level">
                 <li>
-                    <Checkbox onClick={() => levelClick(0)} />
+                    <Checkbox onClick={() => clickLoader(levelClick, 0)} />
                     100 ({courseByLevel[0]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => levelClick(1)} />
+                    <Checkbox onClick={() => clickLoader(levelClick, 1)} />
                     200 ({courseByLevel[1]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => levelClick(2)} />
+                    <Checkbox onClick={() => clickLoader(levelClick, 2)} />
                     300 ({courseByLevel[2]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => levelClick(3)} />
+                    <Checkbox onClick={() => clickLoader(levelClick, 3)} />
                     400 ({courseByLevel[3]})
                 </li>
             </ul>
             <span class="ul-header">Division</span>
             <ul class="Division">
                 <li>
-                    <Checkbox onClick={() => divClick(0)} />
+                    <Checkbox onClick={() => clickLoader(divClick, 0)} />
                     Division I ({courseByDiv[0]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => divClick(1)} />
+                    <Checkbox onClick={() => clickLoader(divClick, 1)} />
                     Division II ({courseByDiv[1]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => divClick(2)} />
+                    <Checkbox onClick={() => clickLoader(divClick, 2)} />
                     Division III ({courseByDiv[2]})
                 </li>
             </ul>
             <span class="ul-header">Distributions</span>
             <ul class="Distribution">
                 <li>
-                    <Checkbox onClick={() => distClick(0)} />
+                    <Checkbox onClick={() => clickLoader(distClick, 0)} />
                     Diversity, Power, and Equality (DPE) ({courseByDist[0]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => distClick(1)} />
+                    <Checkbox onClick={() => clickLoader(distClick, 1)} />
                     Writing Intensive (WI) ({courseByDist[1]})
                 </li>
                 <li>
-                    <Checkbox onClick={() => distClick(2)} />
+                    <Checkbox onClick={() => clickLoader(distClick, 2)} />
                     Quantitative/Formal Reasoning (QFR) ({courseByDist[2]})
                 </li>
             </ul>
             <span class="ul-header">Conflicts</span>
             <ul class="no-conflict">
                 <li>
-                    <Checkbox onClick={() => conflictClick()} />
+                    <Checkbox onClick={() => clickLoader(conflictClick)} />
                     Only classes that fit my current schedule
                 </li>
             </ul>
             <span class="ul-header">Others</span>
             <ul class="pffc">
                 <li>
-                    <Checkbox onClick={() => othersClick(0)} />
+                    <Checkbox onClick={() => clickLoader(othersClick, 0)} />
                     Pass Fail Available
                 </li>
                 <li>
-                    <Checkbox onClick={() => othersClick(1)} />
+                    <Checkbox onClick={() => clickLoader(othersClick, 1)} />
                     Fifth Course Available
                 </li>
             </ul>
@@ -156,10 +166,12 @@ const AdditionalOptions = ({
 };
 
 const mapStateToProps = (state) => ({
-    catalog: getSearchedCourses(state)
+    catalog: getSearchedCourses(state),
+    filters: getFilters(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
+    onSearch: (query = undefined, filters) => dispatch(doSearchCourse(query, filters)),
     conflictClick: () => dispatch(doToggleConflict()),
     othersClick: (index) => dispatch(doToggleOthers(index)),
     divClick: (index) => dispatch(doToggleDiv(index)),

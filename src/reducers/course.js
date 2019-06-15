@@ -1,9 +1,7 @@
 import INITIAL_CATALOG from '../data/1920';
 import {SEARCH_COURSE, RESET_LOAD, LOAD_COURSES} from '../constants/actionTypes';
 
-const applySearchCourse = (state, param, filters, catalog) => {
-    if (param === '') return catalog;
-
+const applySearchCourse = (state, param = state.query, filters, catalog) => {
     return Object.assign({}, state, {
         searched: INITIAL_STATE.searched.filter((course) => {
             const searchArea = (
@@ -23,7 +21,7 @@ const applySearchCourse = (state, param, filters, catalog) => {
             let check = false;
             let count = 0;
             for (const semester of filters.semesters) {
-                if (semester && parseInt(course.STRM) === parseInt(semester)) {
+                if (semester && course.STRM === semester) {
                     check = true;
                     break;
                 } else if (!semester) count++;
@@ -72,7 +70,8 @@ const applySearchCourse = (state, param, filters, catalog) => {
             if (!check) return false;
 
             return true; // TOOD implement others and conflict.
-        })
+        }),
+        query: param
     });
 };
 
@@ -80,7 +79,8 @@ const INITIAL_STATE = {
     searched: INITIAL_CATALOG.filter(
         (course) => course.OFFERED === 'Y' && course.WMS_FACIL_DESCR1 !== 'Cancelled'
     ),
-    loadGroup: 1
+    loadGroup: 1,
+    query: ''
 };
 
 const applyResetLoad = (state) => {
