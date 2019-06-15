@@ -1,7 +1,7 @@
 import INITIAL_CATALOG from '../data/1920';
 import {SEARCH_COURSE, RESET_LOAD, LOAD_COURSES} from '../constants/actionTypes';
 
-const applySearchCourse = (state, param, catalog) => {
+const applySearchCourse = (state, param, filters, catalog) => {
     if (param === '') return catalog;
 
     return Object.assign({}, state, {
@@ -12,15 +12,66 @@ const applySearchCourse = (state, param, catalog) => {
                 course.COURSE_TITLE_LONG +
                 course.WMS_DESCR_SRCH
             ).toLowerCase();
-            let result = true;
+
             const queries = param.toLowerCase().split(' ');
-            for (let query of queries) {
+            for (const query of queries) {
                 if (!searchArea.includes(query)) {
-                    result = false;
-                    break;
+                    return false;
                 }
             }
-            return result;
+
+            let check = false;
+            let count = 0;
+            for (const semester of filters.semesters) {
+                if (semester && parseInt(course.STRM) === parseInt(semester)) {
+                    check = true;
+                    break;
+                } else if (!semester) count++;
+            }
+
+            if (count === filters.semesters.length) check = true;
+            if (!check) return false;
+
+            check = false;
+            count = 0;
+            for (const level of filters.levels) {
+                if (level && Math.floor(parseInt(course.CATALOG_NBR) / 100) === level) {
+                    check = true;
+                    break;
+                } else if (!level) count++;
+            }
+
+            if (count === filters.levels.length) check = true;
+
+            if (!check) return false;
+
+            const attributes = course.WMS_ATTR_SRCH.split(',');
+
+            check = false;
+            count = 0;
+            for (const distribution of filters.distributions) {
+                if (distribution && attributes.indexOf(distribution) !== -1) {
+                    check = true;
+                    break;
+                } else if (!distribution) count++;
+            }
+
+            if (count === filters.distributions.length) check = true;
+            if (!check) return false;
+
+            check = false;
+            count = 0;
+            for (const division of filters.divisions) {
+                if (division && attributes.indexOf(division) !== -1) {
+                    check = true;
+                    break;
+                } else if (!division) count++;
+            }
+
+            if (count === filters.divisions.length) check = true;
+            if (!check) return false;
+
+            return true; // TOOD implement others and conflict.
         })
     });
 };
@@ -47,7 +98,7 @@ const applyLoadCourses = (state, action) => {
 function courseReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case SEARCH_COURSE:
-            return applySearchCourse(state, action.param, INITIAL_STATE);
+            return applySearchCourse(state, action.param, action.filters, INITIAL_STATE);
         case RESET_LOAD:
             return applyResetLoad(state);
         case LOAD_COURSES:

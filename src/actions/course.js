@@ -28,9 +28,10 @@ const doUnhideCourse = (course) => ({
     course
 });
 
-const doSearchCourse = (param) => ({
+const doSearchCourse = (param, filters) => ({
     type: SEARCH_COURSE,
-    param
+    param,
+    filters
 });
 
 const doLoadCourses = (newLoadGroup) => ({

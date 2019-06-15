@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {doSearchCourse, doResetLoad, doLoadCourses} from '../actions/course';
 import {getSearchedCourses, getLoadedCourses} from '../selectors/course';
+import {getFilters} from '../selectors/filter';
 import './Search.css';
 
 class Search extends Component {
@@ -19,7 +20,7 @@ class Search extends Component {
     onChange(event) {
         const {value} = event.target;
         this.setState({query: value});
-        this.props.onSearch(value);
+        this.props.onSearch(value, this.props.filters);
         this.props.resetLoad();
     }
 
@@ -48,11 +49,12 @@ const Button = ({onClick, className, type = 'button', children}) => (
 
 const mapStateToProps = (state) => ({
     catalog: getSearchedCourses(state),
-    loadedCourses: getLoadedCourses(state)
+    loadedCourses: getLoadedCourses(state),
+    filters: getFilters(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    onSearch: (query) => dispatch(doSearchCourse(query)),
+    onSearch: (query, filters) => dispatch(doSearchCourse(query, filters)),
     onLoad: (courses) => dispatch(doLoadCourses(courses)),
     resetLoad: () => dispatch(doResetLoad())
 });

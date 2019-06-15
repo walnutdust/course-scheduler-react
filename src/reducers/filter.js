@@ -6,6 +6,7 @@ import {
     TOGGLE_CONFLICT,
     TOGGLE_LEVEL
 } from '../constants/actionTypes';
+import {SEMESTERS, DISTRIBUTIONS, DIVISIONS, OTHERS, LEVELS} from '../constants/constants';
 
 const INITIAL_STATE = {
     semesters: [false, false, false],
@@ -23,35 +24,47 @@ const toggleConf = (state, action) => {
 };
 const toggleSem = (state, action) => {
     const final = state.semesters;
-    final[action.index] = !final[action.index];
+
+    if (final[action.index]) final[action.index] = false;
+    else final[action.index] = SEMESTERS[action.index];
+
     return Object.assign({}, state, {
         semesters: final
     });
 };
 const toggleDist = (state, action) => {
     const final = state.distributions;
-    final[action.index] = !final[action.index];
+
+    if (final[action.index]) final[action.index] = false;
+    else final[action.index] = DISTRIBUTIONS[action.index];
+
     return Object.assign({}, state, {
         distributions: final
     });
 };
 const toggleDiv = (state, action) => {
     const final = state.divisions;
-    final[action.index] = !final[action.index];
+
+    if (final[action.index]) final[action.index] = false;
+    else final[action.index] = DIVISIONS[action.index];
+
     return Object.assign({}, state, {
         divisions: final
     });
 };
 const toggleOthers = (state, action) => {
     const final = state.others;
-    final[action.index] = !final[action.index];
+
     return Object.assign({}, state, {
         others: final
     });
 };
 const toggleLevel = (state, action) => {
     const final = state.levels;
-    final[action.index] = !final[action.index];
+
+    if (final[action.index]) final[action.index] = false;
+    else final[action.index] = LEVELS[action.index];
+
     return Object.assign({}, state, {
         levels: final
     });
