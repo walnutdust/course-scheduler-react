@@ -1,6 +1,6 @@
 import {SUBMENU_CHANGE} from '../constants/actionTypes';
 
-const INITIAL_STATE = {active: 'Timetable', loadGroup: 1};
+const INITIAL_STATE = {active: 'Timetable'};
 
 const changeActive = (state, action) => {
     return Object.assign({}, state, {

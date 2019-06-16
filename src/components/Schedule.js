@@ -71,25 +71,26 @@ const Schedule = ({added, unhidden}) => {
                 <div class="day-title">
                     <span>{day}</span>
                 </div>
-                {(courseDay[day] || []).map((row) => DayCourseComponent(row))}
+                <div class="column course-day">
+                    {(courseDay[day] || []).map((row) => DayCourseComponent(row))}
+                </div>
             </li>
         );
     };
 
     const DayCourseComponent = (row) => {
+        console.log(row);
         return (
-            <div class="column course-day">
+            <div class="course-containers row">
                 {row.map((slot) => {
-                    return <div class="course-containers">{CourseSlot(slot)}</div>;
+                    return CourseSlot(slot);
                 })}
-                {row.length === 0 && <div class="course-containers" />}
             </div>
         );
     };
 
     const courseTimeParsed = (course) => {
         const result = [];
-        console.log(course);
 
         // Check for tutorials or TBA?
         if (course.WMS_STND_MTG_PAT1 !== ' ' && course.WMS_STND_MTG_PAT1 !== 'TBA') {
@@ -173,26 +174,27 @@ const Schedule = ({added, unhidden}) => {
         return result;
     };
 
-    const checkConflict = (this_slot, other_slot) => {
-        if (this_slot[1] < other_slot[1] + other_slot[2] && this_slot[1] > other_slot[1])
-            return true;
-        if (other_slot[1] < this_slot[1] + this_slot[2] && other_slot[1] > this_slot[1])
-            return true;
+    const checkConflict = (slot, otherSlot) => {
+        if (slot[0] <= otherSlot[0] + otherSlot[1] && slot[0] >= otherSlot[0]) return true;
+        if (otherSlot[0] <= slot[0] + slot[1] && otherSlot[0] >= slot[0]) return true;
 
         return false;
     };
 
     const addSlot = (slot, course) => {
         for (const dayRow of courseDay[slot[0]]) {
-            let conflict_present = false;
-            for (const other_slot of dayRow) {
-                if (checkConflict(slot, other_slot)) {
-                    conflict_present = true;
+            let conflictPresent = false;
+
+            for (const otherSlot of dayRow) {
+                if (checkConflict([slot[1], slot[2]], otherSlot)) {
+                    console.log(slot);
+                    console.log(otherSlot);
+                    conflictPresent = true;
                     break;
                 }
             }
 
-            if (conflict_present) continue;
+            if (conflictPresent) continue;
             else {
                 dayRow.push([slot[1], slot[2], course]);
                 return;
