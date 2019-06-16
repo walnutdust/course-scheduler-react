@@ -35,6 +35,7 @@ const AdditionalOptions = ({
     const courseByLevel = [0, 0, 0, 0];
     const courseByDiv = [0, 0, 0];
     const courseByDist = [0, 0, 0];
+    const courseByOthers = [0, 0];
 
     catalog.forEach((course) => {
         switch (course.STRM) {
@@ -64,6 +65,13 @@ const AdditionalOptions = ({
             if (attr === DISTRIBUTIONS[1]) courseByDist[1]++;
             if (attr === DISTRIBUTIONS[2]) courseByDist[2]++;
         });
+
+        const grading = course.GRADING_BASIS;
+        if (grading === 'OPT') {
+            courseByOthers[0]++;
+            courseByOthers[1]++;
+        } else if (grading === OTHERS[0]) courseByOthers[0]++;
+        else if (grading === OTHERS[1]) courseByOthers[1]++;
     });
 
     const clickLoader = (funct, param) => {
@@ -150,11 +158,11 @@ const AdditionalOptions = ({
             <ul class="pffc">
                 <li>
                     <Checkbox onClick={() => clickLoader(othersClick, 0)} />
-                    Pass Fail Available
+                    Pass Fail Available ({courseByOthers[0]})
                 </li>
                 <li>
                     <Checkbox onClick={() => clickLoader(othersClick, 1)} />
-                    Fifth Course Available
+                    Fifth Course Available ({courseByOthers[1]})
                 </li>
             </ul>
             <ul class="time">

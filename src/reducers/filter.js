@@ -55,6 +55,8 @@ const toggleDiv = (state, action) => {
 const toggleOthers = (state, action) => {
     const final = state.others;
 
+    if (final[action.index]) final[action.index] = false;
+    else final[action.index] = OTHERS[action.index];
     return Object.assign({}, state, {
         others: final
     });

@@ -1,7 +1,7 @@
 import INITIAL_CATALOG from '../data/1920';
 import {SEARCH_COURSE, RESET_LOAD, LOAD_COURSES} from '../constants/actionTypes';
 
-const applySearchCourse = (state, param = state.query, filters, catalog) => {
+const applySearchCourse = (state, param = state.query, filters) => {
     return Object.assign({}, state, {
         searched: INITIAL_STATE.searched.filter((course) => {
             const searchArea = (
@@ -69,6 +69,18 @@ const applySearchCourse = (state, param = state.query, filters, catalog) => {
             if (count === filters.divisions.length) check = true;
             if (!check) return false;
 
+            check = false;
+            count = 0;
+            for (const attr of filters.others) {
+                if (attr && (course.GRADING_BASIS === attr || course.GRADING_BASIS === 'OPT')) {
+                    check = true;
+                    break;
+                } else if (!attr) count++;
+            }
+
+            if (count === filters.others.length) check = true;
+            if (!check) return false;
+
             return true; // TOOD implement others and conflict.
         }),
         query: param
@@ -98,7 +110,7 @@ const applyLoadCourses = (state, action) => {
 function courseReducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case SEARCH_COURSE:
-            return applySearchCourse(state, action.param, action.filters, INITIAL_STATE);
+            return applySearchCourse(state, action.param, action.filters);
         case RESET_LOAD:
             return applyResetLoad(state);
         case LOAD_COURSES:

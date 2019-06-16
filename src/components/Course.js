@@ -293,6 +293,25 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
 
+    const passfail = () => {
+        if (GRADING_BASIS) {
+            switch (GRADING_BASIS) {
+                case 'WPP':
+                    return 'Winter Study Course';
+                case 'GRD':
+                    return 'No Pass/Fail or Fifth Course Available';
+                case 'OPT':
+                    return 'Pass/Fail Available, Fifth Course Available';
+                case 'OPX':
+                    return 'Pass/Fail Unavailable, Fifth Course Available';
+                case 'OPP':
+                    return 'Pass/Fail Available, Fifth Course Unavailable';
+                default:
+                    return;
+            }
+        }
+    };
+
     const addIndex = added.indexOf(course);
     const isAdded = addIndex !== -1;
     const isHidden = hidden.indexOf(course) !== -1;
@@ -382,6 +401,10 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
 
                 <p class="course-distributions">
                     <strong>Distributions:</strong> {courseDistributions()}
+                </p>
+
+                <p class="pass-fail">
+                    <strong>{passfail()}</strong>
                 </p>
 
                 <p class="extra-information">

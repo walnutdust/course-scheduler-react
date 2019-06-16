@@ -9,5 +9,5 @@ export const BORDER_PALATTE = ['#03A9F4', '#AFB42B', '#E64A19', '#455A64', '#7B1
 export const SEMESTERS = ['1201', '1202', '1203'];
 export const DISTRIBUTIONS = ['DPE_DPE', 'WAC_WAC', 'QFR_QFR'];
 export const DIVISIONS = ['DIV_D1', 'DIV_D2', 'DIV_D3'];
-export const OTHERS = ['', ''];
+export const OTHERS = ['OPP', 'OPX'];
 export const LEVELS = [1, 2, 3, 4];
