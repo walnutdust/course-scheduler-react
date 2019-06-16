@@ -76,11 +76,8 @@
     min-height: 50px;
     overflow: hidden;
     width: 98%;
-    background: repeating-linear-gradient(
-        to right,
-        #fff 0% calc(100% / 14),
-        #eee calc(100% / 14) calc(200% / 14)
-    );
+    background: linear-gradient(to right, #fff 0% 50%, #eee 50% 100%);
+    background-size: calc(200% / 14) 100%;
 }
 
 .schedule ol {

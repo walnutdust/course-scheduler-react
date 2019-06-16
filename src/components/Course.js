@@ -3,7 +3,15 @@ import './Course.css';
 import {connect} from 'react-redux';
 import {doAddCourse, doRemoveCourse, doHideCourse, doUnhideCourse} from '../actions/course';
 import {getAddedCourses, getHiddenCourses, getUnhiddenCourses} from '../selectors/course';
-import {START_F, END_F, START_W, END_W, START_S, END_S, PALATTE} from '../constants/constants';
+import {
+    START_F,
+    END_F,
+    START_W,
+    END_W,
+    START_S,
+    END_S,
+    BORDER_PALATTE
+} from '../constants/constants';
 
 const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnhide}) => {
     const {
@@ -392,7 +400,11 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     return (
         <div
             class="course"
-            style={isAdded ? {backgroundColor: PALATTE[addIndex % PALATTE.length]} : {}}
+            style={
+                isAdded
+                    ? {borderLeft: '5px solid ' + BORDER_PALATTE[addIndex % BORDER_PALATTE.length]}
+                    : {}
+            }
             onClick={toggleBody}>
             <div class="course-header">
                 <div class="row course-title">
