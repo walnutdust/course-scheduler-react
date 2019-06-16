@@ -42,7 +42,7 @@ const Schedule = ({added, unhidden}) => {
                     borderColor: BORDER_PALATTE[index % BORDER_PALATTE.length]
                 }}>
                 <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
-                <div>{course.SSR_COMPONENT + ' [' + course.CLASS_SECTION + ']'}</div>
+                <div>{course.SSR_COMPONENT}</div>
                 <div>{stringTime(slot[0], slot[1]) + ' ' + (course.FACIL_DESCR1 || '')}</div>
             </div>
         );
@@ -79,7 +79,6 @@ const Schedule = ({added, unhidden}) => {
     };
 
     const DayCourseComponent = (row) => {
-        console.log(row);
         return (
             <div class="course-containers row">
                 {row.map((slot) => {
@@ -187,8 +186,6 @@ const Schedule = ({added, unhidden}) => {
 
             for (const otherSlot of dayRow) {
                 if (checkConflict([slot[1], slot[2]], otherSlot)) {
-                    console.log(slot);
-                    console.log(otherSlot);
                     conflictPresent = true;
                     break;
                 }

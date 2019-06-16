@@ -10,8 +10,7 @@ class Search extends Component {
         super(props);
 
         this.state = {
-            query: '',
-            group: 1
+            query: ''
         };
 
         this.onChange = this.onChange.bind(this);
@@ -35,17 +34,10 @@ class Search extends Component {
                     value={this.state.query}
                     onChange={this.onChange}
                 />
-                <Button type="submit">Search</Button>
             </form>
         );
     }
 }
-
-const Button = ({onClick, className, type = 'button', children}) => (
-    <button type={type} className={className} onClick={onClick}>
-        {children}
-    </button>
-);
 
 const mapStateToProps = (state) => ({
     catalog: getSearchedCourses(state),

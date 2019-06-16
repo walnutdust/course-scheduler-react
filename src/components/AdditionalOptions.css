@@ -2,8 +2,13 @@
     top: 0;
     position: -webkit-sticky;
     position: sticky;
-    padding-left: 15px;
-    padding-top: 15px;
+    display: flex;
+    flex-grow: 0;
+    padding: 15px;
+    background-color: white;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 0.4;
 }
 
 .num-found {

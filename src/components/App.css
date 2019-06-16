@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700&display=swap');
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
 .row {
@@ -20,13 +20,7 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 0.15;
-}
-
-.additional-options {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 0.4;
+    min-width: 70px;
 }
 
 .main-container {
@@ -34,4 +28,12 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 1.4;
+}
+
+.app {
+    background-color: hsla(210, 30%, 93%);
+}
+
+button {
+    cursor: pointer;
 }

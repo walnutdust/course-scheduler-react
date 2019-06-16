@@ -82,9 +82,9 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     } = course;
 
     const semester = () => {
-        if (STRM === '1201') return '(Fall)';
-        else if (STRM === '1202') return '(Winter)';
-        else if (STRM === '1203') return '(Spring)';
+        if (STRM === '1201') return 'Fall';
+        else if (STRM === '1202') return 'Winter';
+        else if (STRM === '1203') return 'Spring';
     };
 
     const instructors = () => {
@@ -288,7 +288,7 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
     };
 
     const toggleBody = (event) => {
-        if (event.target.localName !== 'div') return;
+        if (event.target.localName === 'button' || event.target.localName === 'a') return;
         let bodyVisibility = event.currentTarget.children[1].hidden;
         event.currentTarget.children[1].hidden = bodyVisibility ? false : true;
     };
@@ -332,7 +332,8 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
             return (
                 <div class="course-buttons">
                     <button onClick={() => (isAdded ? onRemove(course) : onAdd(course))}>
-                        {isAdded ? 'Remove from Calendar' : 'Add to Calendar'}
+                        <i class="material-icons">{isAdded ? 'event_busy' : 'event_available'} </i>
+                        <span>{isAdded ? 'Remove' : 'Add'}</span>
                     </button>
                 </div>
             );
@@ -340,7 +341,11 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
 
     const distributionIcons = () => {
         if (WMS_ATTR_SRCH) {
-            return WMS_ATTR_SRCH.split(',').map((attr) => distributionIcon(attr));
+            return (
+                <div class="dis-icons">
+                    {WMS_ATTR_SRCH.split(',').map((attr) => distributionIcon(attr))}
+                </div>
+            );
         }
     };
 
@@ -363,6 +368,27 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
         }
     };
 
+    const ssrComponent = (comp) => {
+        switch (comp) {
+            case 'LEC':
+                return 'Lecture';
+            case 'SEM':
+                return 'Seminar';
+            case 'TUT':
+                return 'Tutorial';
+            case 'STU':
+                return 'Studio';
+            case 'IND':
+                return 'Independent Study';
+            default:
+                return comp;
+        }
+    };
+
+    const capitalize = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    };
+
     return (
         <div
             class="course"
@@ -370,33 +396,41 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
             onClick={toggleBody}>
             <div class="course-header">
                 <div class="row course-title">
-                    {SUBJECT} {CATALOG_NBR} - {CLASS_SECTION} {semester()} {distributionIcons()}
-                    {COURSE_TITLE_LONG} ({SSR_COMPONENT})
+                    <div class="row title">
+                        {SUBJECT} {CATALOG_NBR} {COURSE_TITLE_LONG}
+                    </div>
+                    <div class="row header-info">
+                        <div class="column">{distributionIcons()}</div>
+                        <div class="column ra">
+                            {semester() + ', ' + ssrComponent(SSR_COMPONENT)}, Section{' '}
+                            {CLASS_SECTION}
+                        </div>
+                    </div>
                 </div>
-                <div class="row">
+                <div class="row course-summary">
                     <div class="column">
                         <div class="row">
                             <span>{instructors()}</span>
                             <span>{courseTime()}</span>
                         </div>
                         <div class="row">
-                            <strong class="course-prereqs">Pre-Requisites:&nbsp;</strong>{' '}
-                            {WMS_PREREQS}
+                            <p>
+                                <strong class="course-prereqs">Pre-Requisites:&nbsp;</strong>{' '}
+                                {WMS_PREREQS}
+                            </p>
                         </div>
                     </div>
-
-                    {courseButtons()}
                 </div>
             </div>
 
             <div class="course-body" hidden>
                 <p class="course-description">{WMS_DESCR_SRCH}</p>
                 <p class="course-format">
-                    <strong>Class Format:</strong> {WMS_CLASS_FORMAT}
+                    <strong>Class Format:</strong> {capitalize(WMS_CLASS_FORMAT)}
                 </p>
 
                 <p class="course-enroll-pref">
-                    <strong>Enrollment Preferences:</strong> {WMS_RQMT_EVAL}
+                    <strong>Enrollment Preferences:</strong> {capitalize(WMS_RQMT_EVAL)}
                 </p>
 
                 <p class="course-distributions">
@@ -411,6 +445,8 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
                     <strong>Extra Information:</strong> {extraInfo()}
                 </p>
             </div>
+
+            {courseButtons()}
         </div>
     );
 };

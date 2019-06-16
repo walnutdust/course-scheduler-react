@@ -6,7 +6,6 @@ import Footer from './Footer';
 import SubMenu from './SubMenu';
 import Search from './Search';
 import Timetable from './Timetable';
-import Checkbox from './Checkbox';
 import AdditionalOptions from './AdditionalOptions';
 import {getCurrSubMenu} from '../selectors/utils';
 import {connect} from 'react-redux';
