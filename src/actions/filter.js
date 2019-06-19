@@ -4,7 +4,9 @@ import {
     TOGGLE_DIV,
     TOGGLE_OTHERS,
     TOGGLE_CONFLICT,
-    TOGGLE_LEVEL
+    TOGGLE_LEVEL,
+    UPDATE_START,
+    UPDATE_END
 } from '../constants/actionTypes';
 
 const doToggleSem = (index) => ({
@@ -36,4 +38,23 @@ const doToggleLevel = (index) => ({
     index
 });
 
-export {doToggleConflict, doToggleDist, doToggleDiv, doToggleLevel, doToggleOthers, doToggleSem};
+const doUpdateStart = (time) => ({
+    type: UPDATE_START,
+    time
+});
+
+const doUpdateEnd = (time) => ({
+    type: UPDATE_END,
+    time
+});
+
+export {
+    doToggleConflict,
+    doToggleDist,
+    doToggleDiv,
+    doToggleLevel,
+    doToggleOthers,
+    doToggleSem,
+    doUpdateEnd,
+    doUpdateStart
+};

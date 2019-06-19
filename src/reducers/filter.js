@@ -4,7 +4,9 @@ import {
     TOGGLE_DIV,
     TOGGLE_OTHERS,
     TOGGLE_CONFLICT,
-    TOGGLE_LEVEL
+    TOGGLE_LEVEL,
+    UPDATE_END,
+    UPDATE_START
 } from '../constants/actionTypes';
 import {SEMESTERS, DISTRIBUTIONS, DIVISIONS, OTHERS, LEVELS} from '../constants/constants';
 
@@ -14,10 +16,12 @@ const INITIAL_STATE = {
     divisions: [false, false, false],
     others: [false, false],
     levels: [false, false, false, false],
-    conflict: false
+    conflict: false,
+    start: '',
+    end: ''
 };
 
-const toggleConf = (state, action) => {
+const toggleConf = (state) => {
     return Object.assign({}, state, {
         conflict: !state.conflict
     });
@@ -72,7 +76,23 @@ const toggleLevel = (state, action) => {
     });
 };
 
-function filterReducer(state = INITIAL_STATE, action) {
+const updateStart = (state, action) => {
+    state.start = action.time;
+
+    return Object.assign({}, state, {
+        start: action.time
+    });
+};
+
+const updateEnd = (state, action) => {
+    state.end = action.time;
+
+    return Object.assign({}, state, {
+        end: action.time
+    });
+};
+
+const filterReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case TOGGLE_CONFLICT:
             return toggleConf(state, action);
@@ -86,9 +106,13 @@ function filterReducer(state = INITIAL_STATE, action) {
             return toggleOthers(state, action);
         case TOGGLE_LEVEL:
             return toggleLevel(state, action);
+        case UPDATE_START:
+            return updateStart(state, action);
+        case UPDATE_END:
+            return updateEnd(state, action);
         default:
             return state;
     }
-}
+};
 
 export default filterReducer;

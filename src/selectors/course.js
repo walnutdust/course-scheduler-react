@@ -125,10 +125,15 @@ const getCourseDays = (days) => {
     return result;
 };
 
+const getStartTimes = ({courseState}) => courseState.startTimes;
+const getEndTimes = ({courseState}) => courseState.endTimes;
+
 export {
     getAddedCourses,
     getHiddenCourses,
     getUnhiddenCourses,
     getSearchedCourses,
-    getLoadedCourses
+    getLoadedCourses,
+    getStartTimes,
+    getEndTimes
 };

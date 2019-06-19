@@ -81,10 +81,29 @@ const applySearchCourse = (state, param = state.query, filters) => {
             if (count === filters.others.length) check = true;
             if (!check) return false;
 
-            return true; // TOOD implement others and conflict.
+            if (filters.start) {
+                const start = parseTime(filters.start);
+                if (parseTime(course.WMS_START_TIME1) < start) return false;
+                if (parseTime(course.WMS_START_TIME2) < start) return false;
+                if (parseTime(course.WMS_START_TIME3) < start) return false;
+            }
+
+            if (filters.end) {
+                const end = parseTime(filters.end);
+                if (parseTime(course.WMS_END_TIME1) > end) return false;
+                if (parseTime(course.WMS_END_TIME2) > end) return false;
+                if (parseTime(course.WMS_END_TIME3) > end) return false;
+            }
+
+            return true;
         }),
         query: param
     });
+};
+
+const parseTime = (time) => {
+    const splitTime = time.split(':');
+    return parseInt(splitTime[0]) * 60 + parseInt(splitTime[1]);
 };
 
 const INITIAL_STATE = {
@@ -92,7 +111,21 @@ const INITIAL_STATE = {
         (course) => course.OFFERED === 'Y' && course.WMS_FACIL_DESCR1 !== 'Cancelled'
     ),
     loadGroup: 1,
-    query: ''
+    query: '',
+    startTimes: [
+        ...new Set(
+            INITIAL_CATALOG.map((course) => {
+                if (course.WMS_START_TIME1 !== ' ') return course.WMS_START_TIME1;
+            })
+        )
+    ].sort(),
+    endTimes: [
+        ...new Set(
+            INITIAL_CATALOG.map((course) => {
+                if (course.WMS_END_TIME1 !== ' ') return course.WMS_END_TIME1;
+            })
+        )
+    ].sort()
 };
 
 const applyResetLoad = (state) => {
@@ -107,7 +140,7 @@ const applyLoadCourses = (state, action) => {
     });
 };
 
-function courseReducer(state = INITIAL_STATE, action) {
+const courseReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case SEARCH_COURSE:
             return applySearchCourse(state, action.param, action.filters);
@@ -118,6 +151,6 @@ function courseReducer(state = INITIAL_STATE, action) {
         default:
             return state;
     }
-}
+};
 
 export default courseReducer;

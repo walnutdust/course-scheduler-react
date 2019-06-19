@@ -21,7 +21,7 @@ const Schedule = ({added, unhidden}) => {
     };
 
     const HourTitles = (hour) => {
-        return <div class="hour-title">{padZero(hour, 2) + '00'}</div>;
+        return <div className="hour-title">{padZero(hour, 2) + '00'}</div>;
     };
 
     const CourseSlot = (slot) => {
@@ -34,14 +34,14 @@ const Schedule = ({added, unhidden}) => {
 
         return (
             <div
-                class="course-slot"
+                className="course-slot"
                 style={{
                     left: leftAttr,
                     width: widthAttr,
                     backgroundColor: PALATTE[index % PALATTE.length],
                     borderColor: BORDER_PALATTE[index % BORDER_PALATTE.length]
                 }}>
-                <div class="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
+                <div className="course-slot-title">{course.SUBJECT + ' ' + course.CATALOG_NBR}</div>
                 <div>{course.SSR_COMPONENT}</div>
                 <div>{stringTime(slot[0], slot[1]) + ' ' + (course.FACIL_DESCR1 || '')}</div>
             </div>
@@ -67,11 +67,11 @@ const Schedule = ({added, unhidden}) => {
 
     const DayComponent = (day) => {
         return (
-            <li class="day row">
-                <div class="day-title">
+            <li className="day row">
+                <div className="day-title">
                     <span>{day}</span>
                 </div>
-                <div class="column course-day">
+                <div className="column course-day">
                     {(courseDay[day] || []).map((row) => DayCourseComponent(row))}
                 </div>
             </li>
@@ -80,7 +80,7 @@ const Schedule = ({added, unhidden}) => {
 
     const DayCourseComponent = (row) => {
         return (
-            <div class="course-containers row">
+            <div className="course-containers row">
                 {row.map((slot) => {
                     return CourseSlot(slot);
                 })}
@@ -210,12 +210,12 @@ const Schedule = ({added, unhidden}) => {
     }
 
     return (
-        <div class="schedule">
-            <div class="hour-labels">
-                <div class="buffer">&nbsp;</div>
+        <div className="schedule">
+            <div className="hour-labels">
+                <div className="buffer">&nbsp;</div>
                 {hours.map((hour) => HourTitles(hour))}
             </div>
-            <div class="days-container">{days.map((day) => DayComponent(day))}</div>
+            <div className="days-container">{days.map((day) => DayComponent(day))}</div>
         </div>
     );
 };

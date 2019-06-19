@@ -8,3 +8,11 @@
     margin-top: 20px;
     text-align: center;
 }
+
+.unselectable {
+    cursor: not-allowed;
+}
+
+.unselectable:hover {
+    cursor: not-allowed;
+}

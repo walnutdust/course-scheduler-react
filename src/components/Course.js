@@ -3,15 +3,7 @@ import './Course.css';
 import {connect} from 'react-redux';
 import {doAddCourse, doRemoveCourse, doHideCourse, doUnhideCourse} from '../actions/course';
 import {getAddedCourses, getHiddenCourses, getUnhiddenCourses} from '../selectors/course';
-import {
-    START_F,
-    END_F,
-    START_W,
-    END_W,
-    START_S,
-    END_S,
-    BORDER_PALATTE
-} from '../constants/constants';
+import {BORDER_PALATTE} from '../constants/constants';
 
 const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnhide}) => {
     const {
@@ -160,100 +152,6 @@ const Course = ({added, hidden, course, location, onAdd, onRemove, onHide, onUnh
                 WMS_FACIL_DESCR3;
 
         return result;
-    };
-
-    const gcalUrl = () => {
-        let result = [];
-
-        if (WMS_STND_MTG_PAT1 !== ' ' && WMS_STND_MTG_PAT1 !== 'TBA')
-            result.push(
-                gcalUrlGenerator(
-                    WMS_START_TIME1,
-                    WMS_END_TIME1,
-                    WMS_STND_MTG_PAT1,
-                    WMS_FACIL_DESCR1
-                )
-            );
-        if (WMS_STND_MTG_PAT2 !== ' ')
-            result.push(
-                gcalUrlGenerator(
-                    WMS_START_TIME2,
-                    WMS_END_TIME2,
-                    WMS_STND_MTG_PAT2,
-                    WMS_FACIL_DESCR2
-                )
-            );
-        if (WMS_STND_MTG_PAT3 !== ' ')
-            result.push(
-                gcalUrlGenerator(
-                    WMS_START_TIME3,
-                    WMS_END_TIME3,
-                    WMS_STND_MTG_PAT3,
-                    WMS_FACIL_DESCR3
-                )
-            );
-
-        return result;
-    };
-
-    const gcalUrlGenerator = (start, end, days, location) => {
-        let start_string = start.split(':')[0].rjust(2, '0') + start.split(':')[1] + '00';
-        let end_string = end.split(':')[0].rjust(2, '0') + end.split(':')[1] + '00';
-        return (
-            'https://calendar.google.com/calendar/r/eventedit?text=' +
-            SUBJECT +
-            ' ' +
-            CATALOG_NBR +
-            ' ' +
-            COURSE_TITLE_LONG +
-            '&dates=' +
-            START_F +
-            'T' +
-            start_string +
-            '/' +
-            START_F +
-            'T' +
-            end_string +
-            +'&recur=rrule:freq=WEEKLY;until=' +
-            END_F +
-            'T000000;byday=' +
-            dayConversionGCal(days) +
-            '&details=' +
-            WMS_DESCR_SRCH +
-            '&location=' +
-            location +
-            '&sf=true&output=xml'
-        );
-    };
-
-    const dayConversionGCal = (days) => {
-        if (days === 'M-F') return 'MO,TU,WE,TH,FR';
-
-        let result = [];
-
-        days.split('').forEach((day) => {
-            switch (day) {
-                case 'M':
-                    result.push('MO');
-                    break;
-                case 'T':
-                    result.push('TU');
-                    break;
-                case 'W':
-                    result.push('WE');
-                    break;
-                case 'R':
-                    result.push('TH');
-                    break;
-                case 'F':
-                    result.push('FR');
-                    break;
-                default:
-                    break;
-            }
-        });
-
-        return result.join(',');
     };
 
     const extraInfo = () => {

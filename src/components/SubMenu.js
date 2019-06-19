@@ -16,7 +16,7 @@ const SubMenu = ({handler}) => {
     const ListItem = ({image, text, className}) => {
         let classes = 'list-item ' + className;
         return (
-            <li class={classes}>
+            <li className={classes}>
                 <div onClick={subSelection}>
                     <i className="material-icons">{image}</i>
                     <div>{text}</div>
@@ -25,7 +25,7 @@ const SubMenu = ({handler}) => {
         );
     };
     return (
-        <div class="submenu">
+        <div className="submenu">
             <ul>
                 <ListItem image="calendar_today" text="Timetable" className="" />
                 <ListItem image="filter_none" text="Catalog" className="unselected" />

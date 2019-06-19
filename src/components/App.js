@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import './App.css';
 import Catalog from './Catalog';
 import Navbar from './Navbar';
-import Footer from './Footer';
 import SubMenu from './SubMenu';
 import Search from './Search';
 import Timetable from './Timetable';
 import AdditionalOptions from './AdditionalOptions';
-import {getCurrSubMenu} from '../selectors/utils';
+import {getCurrSubMenu, getGAPI, getSignInStatus} from '../selectors/utils';
 import {connect} from 'react-redux';
+import {updateGAPI, updateSignIn} from '../actions/utils';
 
 class App extends Component {
     constructor(props) {
@@ -17,15 +17,45 @@ class App extends Component {
         this.getActive = this.getActive.bind(this);
     }
 
+    componentDidMount() {
+        require('google-client-api')().then((gapi) => {
+            console.log('initializing GAPI...');
+            const CLIENT_ID =
+                '99903103727-mcppob91tlqitcd7g11ud46vg0gr90im.apps.googleusercontent.com';
+            const SCOPES = 'https://www.googleapis.com/auth/calendar';
+            const DISCOVERY_DOCS = [
+                'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'
+            ];
+            const API_KEY = 'AIzaSyAxGwi55Zk2mg-Hs-O3qLBcoEMx__cceD0';
+
+            gapi.client
+                .init({
+                    clientId: CLIENT_ID,
+                    scope: SCOPES,
+                    discoveryDocs: DISCOVERY_DOCS,
+                    apiKey: API_KEY
+                })
+                .then(
+                    function() {
+                        console.log('GAPI Initialized.');
+
+                        // Listen for sign-in state changes.
+                        this.props.doUpdateGAPI(gapi);
+                        this.props.doUpdateSignIn(gapi.auth2.getAuthInstance().isSignedIn.get());
+                    }.bind(this)
+                );
+        });
+    }
+
     getActive() {
         if (this.props.active === 'Catalog') {
             return (
-                <div class="row">
-                    <div class="column">
+                <div className="row">
+                    <div className="column">
                         <Search />
                         <Catalog />
                     </div>
-                    <div class="additional-options">
+                    <div className="additional-options">
                         <AdditionalOptions />
                     </div>
                 </div>
@@ -34,7 +64,7 @@ class App extends Component {
 
         if (this.props.active === 'Timetable') {
             return (
-                <div class="row">
+                <div className="row">
                     <Timetable />
                 </div>
             );
@@ -43,13 +73,13 @@ class App extends Component {
 
     render() {
         return (
-            <div class="app">
+            <div className="app">
                 <Navbar />
-                <div class="row">
-                    <div class="sub-menu-column">
+                <div className="row">
+                    <div className="sub-menu-column">
                         <SubMenu />
                     </div>
-                    <div class="main-container">{this.getActive()}</div>
+                    <div className="main-container">{this.getActive()}</div>
                 </div>
             </div>
         );
@@ -57,7 +87,17 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    active: getCurrSubMenu(state)
+    active: getCurrSubMenu(state),
+    gapi: getGAPI(state),
+    signedIn: getSignInStatus(state)
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => ({
+    doUpdateGAPI: (gapi) => dispatch(updateGAPI(gapi)),
+    doUpdateSignIn: (signedIn) => dispatch(updateSignIn(signedIn))
+});
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(App);
