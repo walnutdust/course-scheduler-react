@@ -25,10 +25,10 @@ class Search extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit} class="search">
-                <i class="material-icons">search</i>
+            <form onSubmit={this.onSubmit} className="search">
+                <i className="material-icons">search</i>
                 <input
-                    class="course-search"
+                    className="course-search"
                     type="text"
                     placeholder="Enter course title or code"
                     value={this.state.query}
