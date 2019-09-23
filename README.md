@@ -4,7 +4,7 @@
 
 Garett Tok, 2019
 
-A prototype course scheduler for Williams college, predecessor of the [WSO Course Scheduler](https://wso.williams.edu/schedulecourses)
+A prototype course scheduler for Williams College, predecessor of the [WSO Course Scheduler](https://wso.williams.edu/schedulecourses). Allows users to quickly search and filter course offerings, and view shortlisted courses all in one schedule, streamlining the process of course selection.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -14,14 +14,14 @@ React/Redux.
 
 ## Set-up
 
-Simply clone this repository, set up npm and run `npm start`.
+Simply clone this repository, set up npm and run `npm start`, and find it at `localhost:3000`
 
 ## Screenshots
 
 ### Schedule
 
-![Schedule]()
+![Schedule](https://github.com/walnutdust/course-scheduler-react/blob/master/src/screenshots/schedule.png "Schedule")
 
 ### Catalog
 
-![Catalog]()
+![Catalog](https://github.com/walnutdust/course-scheduler-react/blob/master/src/screenshots/catalog.png "Catalog")
