@@ -5,15 +5,16 @@
   "dependencies": {
     "google-client-api": "^1.0.4",
     "googleapis": "^39.2.0",
+    "handlebars": ">=4.3.0",
     "html2canvas": "^1.0.0-rc.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.3.0",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
-    "set-value": ">=2.0.1",
-    "serialize-javascript": ">=2.1.1"
+    "serialize-javascript": ">=2.1.1",
+    "set-value": ">=2.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
